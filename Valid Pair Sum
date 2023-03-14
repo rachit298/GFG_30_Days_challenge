@@ -1,0 +1,55 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*; 
+
+class GFG{
+    public static void main(String args[]) throws IOException { 
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while(t > 0){
+        	int n = sc.nextInt();
+        	int array[] = new int[n];
+        	for (int i=0; i<n ;i++ ) {
+        		array[i] = sc.nextInt();
+        	}
+            Solution ob = new Solution();
+            System.out.println(ob.ValidPair(array,n));
+            t--;
+        }
+    } 
+} 
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution 
+{ 
+    static long ValidPair(int a[], int n) 
+	{ 
+	    Arrays.sort(a);
+	    
+	    int start = 0, end = n-1;
+	    
+	    long count = 0;
+	    
+	    while(start < end){
+	        
+	        int res = a[end] + a[start];
+	        
+	        if(res > 0){
+	            count += end - start - 1 + 1; // adding current pair itself using '+1' and
+	                                          // adding pairs in range of 'end-start-1'
+	            end--;  // decrement to get other pairs
+	        }
+	        else{
+	            start++; // increment to check for other pairs
+	        }
+	    }
+	    
+	    return count;
+	}
+} 
