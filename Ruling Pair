@@ -1,0 +1,68 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*; 
+class GFG{
+    public static void main(String args[]) throws IOException { 
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while(t > 0){
+        	int n = sc.nextInt();
+        	int array[] = new int[n];
+        	for (int i=0; i<n ; i++ ) {
+        		array[i] = sc.nextInt();
+        	}
+            Solution ob = new Solution();
+            System.out.println(ob.RulingPair(array,n));
+            t--;
+        }
+    } 
+} 
+      
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution { 
+	static int RulingPair(int arr[], int n) { 
+        
+        // store values, sum of digits in HashMaps
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        int max = -1;
+        
+        for(int index = 0; index < arr.length; index++){
+            
+            int sum_of_digits = 0;
+            int temp = arr[index];
+            
+            while(temp > 0){
+                
+                sum_of_digits += temp % 10;
+                temp /= 10;
+            
+            }
+            
+            if(map.containsKey(sum_of_digits)){
+                
+                int curr = map.get(sum_of_digits);
+                max = Math.max(max, curr + arr[index]);
+                
+                if(arr[index] > curr){
+                    map.put(sum_of_digits, arr[index]);
+                }
+                
+            }
+            else{
+                
+                map.put(sum_of_digits, arr[index]);
+            }
+            
+        }
+        
+        return max;
+	}
+}
