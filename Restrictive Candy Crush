@@ -75,6 +75,7 @@ class Solution
             return "";
         }
         
+        //stack will hold pair, which contain character and its count for appearing consucutively
         Stack<Pair> st = new Stack<>();
         
         int count = 0;
@@ -83,42 +84,52 @@ class Solution
             
             if(st.size() == 0){
                 
-                count = 1;
-                st.push(new Pair(s.charAt(index), count));
+                //new pair
+                st.push(new Pair(s.charAt(index), 1));
+                
             }
             else{
                 
                 char ch = s.charAt(index);
             
+                //increment count of the character if already present
                 if(ch == st.peek().ch){
                     
-                    count = st.peek().count+1;
-                    st.push(new Pair(st.peek().ch, count));
+                    st.peek().count++;
                     
-                    if(count == k){
-                        
-                        while(count > 0){
-                            
-                            st.pop();
-                            count--;
-                        }
+                    // if count of character is equal t0 'k' then pop out that pair
+                    if(st.peek().count == k){
+                        st.pop();
                     }
                 }
                 else{
                     
-                    count = 1;
-                    st.push(new Pair(ch, count));
+                    //new pair
+                    st.push(new Pair(ch, 1));
                 }
             }
         }
         
         StringBuilder res = new StringBuilder();
         
+        //get all characters in stringbuilder
         while(st.size() > 0){
             
-            res.append(st.pop().ch);
+            char ch = st.peek().ch;
+            
+            //check if characters have count > 0 so take accordingly
+            //here count will never be equal to 'k'
+            while(st.peek().count > 0){
+                
+                res.append(ch);
+                st.peek().count--;
+            }
+            
+            //pop from stack after each insertion
+            st.pop();
         }
         
+        //reverse the stringbuilder to get correct sequence
         return res.reverse().toString();
     }
 }
