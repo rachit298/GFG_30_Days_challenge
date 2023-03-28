@@ -1,0 +1,66 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GFG {
+     public static void main(String args[]) throws IOException { 
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while(t > 0){
+            int m = sc.nextInt();
+            int n = sc.nextInt();
+            Solution ob = new Solution();
+            System.out.println(ob.candies(m,n));
+            t--;
+        }
+    } 
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution{
+    static int candies(int m, int n)
+    {
+        Queue<Integer> q = new LinkedList<>(); // for storing all unvisited number
+        
+        Set<Integer> s = new HashSet<>(); // set for not taking same number repeatedly
+        
+        int largest_unvisited = (m * n) - m - n; // take LCM by 'm*n' and doing '-m-n' we get last
+                                                 // unvisited number
+        
+        int ans = 1; // number '1' will always be unvisited according to contraints so 'ans' value
+                     // at start is '1'. 'ans' is unvisited numbers count.
+        
+        q.add(largest_unvisited); // add last number in queue
+        
+        s.add(largest_unvisited); // add last number in set
+        
+        while( !q.isEmpty() ){    // run loop while queue has unvisited numbers
+            
+            int fiq = q.peek(); // first in queue element
+            
+            // in both if conditions check if 'fiq - (m or n)' is present or not
+            // if 'fiq - (m - n)' is present then we won't add that same number in queue or set
+            // if not present we will add those numbers and keep checking.
+            
+            if( fiq - m > 1 && !s.contains(fiq - m) ){
+                s.add( fiq - m );
+                q.add( fiq - m );
+            }
+            
+            if( fiq - n > 1 && !s.contains(fiq - n) ){
+                s.add( fiq - n );
+                q.add( fiq - n );
+            }
+            
+            q.remove(); // remove one unvisited number
+            ans++;      // increment 'ans' for every unvisited number
+        }
+        
+        return ans;
+    }
+}
